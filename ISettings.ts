@@ -1,3 +1,4 @@
 export interface ISettings {
-    remoteResource: string
+    remoteResource: string,
+    showContinueButton: boolean,
 }

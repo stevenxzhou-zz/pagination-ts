@@ -1,9 +1,9 @@
 import { ISettings } from "./ISettings";
-import { ISA_FIELD } from "./ISA_FIELD";
+import { IAttributeFields } from "./IAttributeFields";
 
 export interface IPageData {
-    SECTION_TYPE: string,
-    SA_FIELDS: Array<ISA_FIELD>,
+    SECTION_TYPE: number,
+    ATTRIBUTE_FIELDS: Array<IAttributeFields>,
     SETTINGS: ISettings,
     CONTENT: any,
     ELEMENT: string,

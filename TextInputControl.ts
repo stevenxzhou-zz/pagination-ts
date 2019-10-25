@@ -1,5 +1,6 @@
 import { IControl } from "./IControl";
-import { ISA_FIELD } from "./ISA_FIELD";
+import { IAttributeFields } from "./IAttributeFields";
+import { IValidationResult } from "./IValidationResult";
 
 export class TextInputControl extends Node implements IControl {
     controlErrorMessage: string
@@ -7,9 +8,9 @@ export class TextInputControl extends Node implements IControl {
     controlValue: any
     defaultValue: string
     isEnabled: boolean
-    sa_field: ISA_FIELD
+    sa_field: IAttributeFields
 
-    constructor(sa_field: ISA_FIELD) {
+    constructor(sa_field: IAttributeFields) {
         super()
         this.sa_field = sa_field
         this.defaultValue = sa_field.DEFAULT_VALUE
@@ -28,13 +29,18 @@ export class TextInputControl extends Node implements IControl {
     showControlError(): void {}
     hideControlError(): void {}
     
-    validateControl(): boolean {
-        return true;
+    validateControl(): IValidationResult {
+        return {
+            errorMessage: "This is an error",
+            elementId: "id",
+            result: true
+        };
     }
 
     getControlValue(): string {
         return this.controlValue;
     }
+
     setControlValue(value: any): void {
         this.controlValue = value;
     }

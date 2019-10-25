@@ -1,5 +1,5 @@
-export interface ISA_FIELD {
-    CONTROL_TYPE: string
+export interface IAttributeFields {
+    CONTROL_TYPE: number
     DEFAULT_VALUE: string
     PREDICATES: any
     PLACE_HOLDER: string

@@ -2,6 +2,7 @@ import { Http } from "./Http"
 import { IPageData } from "./IPageData"
 import { SelfAsserted } from "./SelfAsserted"
 import { IInteraction } from "./IInteraction"
+import { SectionTypes } from "./SectionTypes";
 
 export class Page {
     sectionContent: string;
@@ -49,7 +50,7 @@ export class Page {
 
     getSection(pageData: IPageData): IInteraction {
         switch(pageData.SECTION_TYPE){
-            case "SelfAsserted":
+            case SectionTypes.SelfAsserted:
                 var selfAsserted = new SelfAsserted(pageData);
                 return selfAsserted;
             default:

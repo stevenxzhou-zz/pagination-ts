@@ -4,9 +4,9 @@ export class Http {
     static getNextPageData(): IPageData {
         
         return {
-            SECTION_TYPE: "SelfAsserted",
-            SA_FIELDS: [{
-                CONTROL_TYPE: "text",
+            SECTION_TYPE: 1,
+            ATTRIBUTE_FIELDS: [{
+                CONTROL_TYPE: 1,
                 DEFAULT_VALUE: "deaulttext",
                 PREDICATES: {},
                 PLACE_HOLDER: "placeholderstring",
@@ -14,6 +14,7 @@ export class Http {
             }],
             SETTINGS: {
                 remoteResource: "https://cpim.azureedge.com/static/tenant/default/selfasserted.cshtml",
+                showContinueButton: true
             },
             CONTENT: {},
             ELEMENT: "https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js",

@@ -1,3 +1,5 @@
+import { IValidationResult } from "./IValidationResult";
+
 export interface IControl {
     controlErrorMessage: string
     controlClaimId: string
@@ -7,7 +9,7 @@ export interface IControl {
     disableControl(): void
     showControlError(): void
     hideControlError(): void
-    validateControl(): boolean
+    validateControl(): IValidationResult
     getControlValue(): string
     setControlValue(value: any): void
 } 

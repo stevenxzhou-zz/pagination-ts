@@ -40,8 +40,12 @@ export class Page {
         var section = this.getSection(pageData);
         var sectionHtml = section.generateServiceContent();
         var api = document.getElementById("api");
-        api.append(sectionHtml);
-
+        if (api.firstChild != null) {
+            api.firstChild.replaceWith(sectionHtml);
+        } else {
+            api.appendChild(sectionHtml);
+        }
+        
         this.pageReady = true;
 
         // Hide wait screen

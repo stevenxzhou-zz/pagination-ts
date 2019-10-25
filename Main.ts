@@ -5,7 +5,7 @@ export class Main {
     // This method only executes when browser initially loads the page.
     initialize(): void {
         var page = new Page();
-        window.page = page;
+        globalThis.page = page;
         page.nextPage();
     }
 }

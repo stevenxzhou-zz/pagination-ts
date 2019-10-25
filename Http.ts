@@ -4,10 +4,16 @@ export class Http {
     static getNextPageData(): IPageData {
         
         return {
-            SECTIONTYPE: "SelfAsserted",
-            SA_FIELDS: {},
+            SECTION_TYPE: "SelfAsserted",
+            SA_FIELDS: [{
+                CONTROL_TYPE: "text",
+                DEFAULT_VALUE: "deaulttext",
+                PREDICATES: {},
+                PLACE_HOLDER: "placeholderstring",
+                IS_ENABLED: true
+            }],
             SETTINGS: {
-                remoteResource: "https://cpim.azureedge.com/static/tenant/default/selfasserted.cshtml"
+                remoteResource: "https://cpim.azureedge.com/static/tenant/default/selfasserted.cshtml",
             },
             CONTENT: {},
             ELEMENT: "https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js",
@@ -34,7 +40,7 @@ export class Http {
     static fetchResourceAsync(url: string): Promise<string> {
         return new Promise(function(resolve, reject) {
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'myservice/template.html');
+            xhr.open('GET', url);
             xhr.setRequestHeader('Content-Type', 'application/html');
             xhr.onload = function() {
                 if (xhr.status === 200) {

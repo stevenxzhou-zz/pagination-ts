@@ -6,6 +6,7 @@ import { IInteraction } from "./IInteraction"
 export class Page {
     sectionContent: string;
     contentReady: boolean;
+    pageReady: boolean;
 
     constructor() {
 
@@ -13,9 +14,11 @@ export class Page {
 
     nextPage(): void {
         this.contentReady = false;
+        this.pageReady = false;
+
         var pageData : IPageData = Http.getNextPageData();
         var scriptPromise = this.appendScriptUrlToHead(pageData.ELEMENT);
-        var templatePromise = this.getRemoteTemplate(pageData.SETTINGS.remoteResource);
+        var templatePromise = this.getRemoteResource(pageData.SETTINGS.remoteResource);
 
         Promise.all([scriptPromise, templatePromise]).then(function(values) {
             this.contentReady = true;
@@ -34,30 +37,30 @@ export class Page {
 
         // Append section in to api.
         var section = this.getSection(pageData);
-        var sectionHtml = section.generateServiceContent(pageData);
+        var sectionHtml = section.generateServiceContent();
         var api = document.getElementById("api");
-        api.innerHTML = sectionHtml;
+        api.append(sectionHtml);
 
-        // Initialize with event listeners.
-        section.initialize(pageData);
+        this.pageReady = true;
 
         // Hide wait screen
         this.hideWaitScreen();
     }
 
     getSection(pageData: IPageData): IInteraction {
-        if (pageData.SECTIONTYPE == "SelfAsserted") {
-            var selfAsserted = new SelfAsserted(pageData);
-            return selfAsserted;
+        switch(pageData.SECTION_TYPE){
+            case "SelfAsserted":
+                var selfAsserted = new SelfAsserted(pageData);
+                return selfAsserted;
+            default:
+                return null;
         }
-
-        return null;
     }
 
     process(pageData: IPageData, template: string): void {
-        // preload customer js and css
         // Sanitize
-        // Merge
+        // preload customer js and css
+        // Merge with default template
     }
 
     showWaitScreen() {
@@ -68,7 +71,7 @@ export class Page {
         console.log("Hide wait screen.");
     }
 
-    getRemoteTemplate(url: string): Promise<string> {
+    getRemoteResource(url: string): Promise<string> {
         return Http.fetchResourceAsync(url);
     }
 

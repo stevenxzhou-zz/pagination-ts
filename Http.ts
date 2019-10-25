@@ -24,11 +24,12 @@ export class Http {
     }
 
     // Async method to send data.
-    static sendData(): Promise<string> {
+    static sendDataAsync(data: any, url: string): Promise<string> {
         return new Promise(function(resolve, reject) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'myservice/api');
+            xhr.open('POST', url);
             xhr.setRequestHeader('Content-Type', 'application/html');
+            xhr.send(data);
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     resolve()

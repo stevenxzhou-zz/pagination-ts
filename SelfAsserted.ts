@@ -4,10 +4,12 @@ import { IControl } from "./IControl";
 import { TextInputControl } from "./TextInputControl";
 import { IValidationResult } from "./IValidationResult";
 import { ControlTypes } from "./ControlTypes";
+import { Http } from "./Http";
 
 export class SelfAsserted implements IInteraction {
-    pageData: IPageData;
+    pageData: IPageData
     controls: Array<IControl>
+    sectionData: any
 
     constructor(pageData: IPageData) {
         this.pageData = pageData;
@@ -15,7 +17,9 @@ export class SelfAsserted implements IInteraction {
 
     submit(): void {
         if (this.validate()) {
-            globalThis.page.nextPage();
+            Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
+                globalThis.page.nextPage();
+            })
         }
     }
 

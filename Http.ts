@@ -1,10 +1,10 @@
 import { IPageData } from "./IPageData"
 
 export class Http {
-    static getNextPageData(): IPageData {
-        
+    static getNextPageData(url: string): IPageData {
+        this.fetchResourceAsync(url).then(function(){        })
         return {
-            SECTION_TYPE: 1,
+            TYPE: 1,
             ATTRIBUTE_FIELDS: [{
                 CONTROL_TYPE: 1,
                 DEFAULT_VALUE: "deaulttext",
@@ -20,7 +20,6 @@ export class Http {
             ELEMENT: "https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js",
             ELEMENTS: ["https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js"]
         }
-
     }
 
     // Async method to send data.
@@ -36,6 +35,11 @@ export class Http {
                 }
             };
         })
+    }
+
+    // Async method to send data.
+    static redirectPage(url: string): void {
+        window.location.replace(url);
     }
 
     // Async method to fetch a resource

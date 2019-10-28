@@ -2,7 +2,9 @@ import { Http } from "./Http"
 import { IPageData } from "./IPageData"
 import { SelfAsserted } from "./SelfAsserted"
 import { IInteraction } from "./IInteraction"
-import { SectionTypes } from "./SectionTypes";
+import { ResponseTypes } from "./ResponseTypes";
+import { IRedirectData } from "./IRedirectData";
+import { IResponseData } from "./IResponseData";
 
 export class Page {
     sectionContent: string;
@@ -13,19 +15,28 @@ export class Page {
 
     }
 
-    nextPage(): void {
+    nextPage(url: string): void {
         this.contentReady = false;
         this.pageReady = false;
 
-        var pageData : IPageData = Http.getNextPageData();
-        var scriptPromise = this.appendScriptUrlToHead(pageData.ELEMENT);
-        var templatePromise = this.getRemoteResource(pageData.SETTINGS.remoteResource);
+        var responseData : IResponseData = Http.getNextPageData(url);
 
-        Promise.all([scriptPromise, templatePromise]).then(function(values) {
-            this.contentReady = true;
-            var template = values[1];
-            this.buildPage(pageData, template);
-        })
+        // redirect page.
+        if (responseData.TYPE == ResponseTypes.Redirect) {
+            var redirectData : IRedirectData = <IRedirectData>responseData;
+            Http.redirectPage(redirectData.REDIRECT_URI);
+        } else {
+            var pageData : IPageData = <IPageData>responseData;
+
+            var scriptPromise = this.appendScriptUrlToHead(pageData.ELEMENT);
+            var templatePromise = this.getRemoteResource(pageData.SETTINGS.remoteResource);
+    
+            Promise.all([scriptPromise, templatePromise]).then(function(values) {
+                this.contentReady = true;
+                var template = values[1];
+                this.buildPage(pageData, template);
+            })
+        }
     }
 
     buildPage(pageData: IPageData, template: string): void {
@@ -53,8 +64,8 @@ export class Page {
     }
 
     getSection(pageData: IPageData): IInteraction {
-        switch(pageData.SECTION_TYPE){
-            case SectionTypes.SelfAsserted:
+        switch(pageData.TYPE){
+            case ResponseTypes.SelfAsserted:
                 var selfAsserted = new SelfAsserted(pageData);
                 return selfAsserted;
             default:

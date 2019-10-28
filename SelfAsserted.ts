@@ -18,7 +18,7 @@ export class SelfAsserted implements IInteraction {
     submit(): void {
         if (this.validate()) {
             Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
-                globalThis.page.nextPage();
+                globalThis.page.nextPage("/nextpage");
             })
         }
     }

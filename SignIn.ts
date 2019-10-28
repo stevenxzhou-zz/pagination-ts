@@ -1,9 +1,21 @@
 import { IInteraction } from "./IInteraction";
+import { Http } from "./Http";
+import { IPageData } from "./IPageData";
 
 export class SignIn implements IInteraction {
-    
+    pageData: IPageData
+    sectionData: any
+
     submit(): void { 
-        globalThis.page.nextPage();
+        if (this.validate()) {
+            Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
+                globalThis.page.nextPage("/nextpage");
+            })
+        }
+    }
+
+    redirectToSignup(): void {
+        globalThis.page.nextPage("/signup");
     }
 
     validate(): boolean {

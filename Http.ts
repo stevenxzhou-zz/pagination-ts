@@ -4,21 +4,21 @@ export class Http {
     static getNextPageData(url: string): IPageData {
         this.fetchResourceAsync(url).then(function(){        })
         return {
-            TYPE: 1,
-            ATTRIBUTE_FIELDS: [{
-                CONTROL_TYPE: 1,
-                DEFAULT_VALUE: "deaulttext",
-                PREDICATES: {},
-                PLACE_HOLDER: "placeholderstring",
-                IS_ENABLED: true
+            type: 1,
+            attributeFields: [{
+                controlType: 1,
+                defaultValue: "deaulttext",
+                predicates: {},
+                placeHolder: "placeholderstring",
+                isEnabled: true
             }],
-            SETTINGS: {
+            settings: {
                 remoteResource: "https://cpim.azureedge.com/static/tenant/default/selfasserted.cshtml",
                 showContinueButton: true
             },
-            CONTENT: {},
-            ELEMENT: "https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js",
-            ELEMENTS: ["https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js"]
+            content: {},
+            element: "https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js",
+            elements: ["https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js"]
         }
     }
 

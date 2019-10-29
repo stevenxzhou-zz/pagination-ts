@@ -15,21 +15,21 @@ export class Page {
 
     }
 
-    nextPage(url: string): void {
+    nextPage(url?: string): void {
         this.contentReady = false;
         this.pageReady = false;
 
         var responseData : IResponseData = Http.getNextPageData(url);
 
         // redirect page.
-        if (responseData.TYPE == ResponseTypes.Redirect) {
+        if (responseData.type == ResponseTypes.Redirect) {
             var redirectData : IRedirectData = <IRedirectData>responseData;
-            Http.redirectPage(redirectData.REDIRECT_URI);
+            Http.redirectPage(redirectData.redirectUri);
         } else {
             var pageData : IPageData = <IPageData>responseData;
 
-            var scriptPromise = this.appendScriptUrlToHead(pageData.ELEMENT);
-            var templatePromise = this.getRemoteResource(pageData.SETTINGS.remoteResource);
+            var scriptPromise = this.appendScriptUrlToHead(pageData.element);
+            var templatePromise = this.getRemoteResource(pageData.settings.remoteResource);
     
             Promise.all([scriptPromise, templatePromise]).then(function(values) {
                 this.contentReady = true;
@@ -64,7 +64,7 @@ export class Page {
     }
 
     getSection(pageData: IPageData): IInteraction {
-        switch(pageData.TYPE){
+        switch(pageData.type){
             case ResponseTypes.SelfAsserted:
                 var selfAsserted = new SelfAsserted(pageData);
                 return selfAsserted;

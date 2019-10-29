@@ -1,21 +1,22 @@
 import { IInteraction } from "./IInteraction";
 import { IPageData } from "./IPageData";
-import { IControl } from "./IControl";
-import { TextInputControl } from "./TextInputControl";
+import { IInput } from "./IInput";
+import { TextInput } from "./TextInput";
 import { IValidationResult } from "./IValidationResult";
 import { ControlTypes } from "./ControlTypes";
 import { Http } from "./Http";
+import { Button } from "./Button";
 
 export class SelfAsserted implements IInteraction {
     pageData: IPageData
-    controls: Array<IControl>
+    controls: Array<IInput>
     sectionData: any
 
     constructor(pageData: IPageData) {
         this.pageData = pageData;
     }
 
-    submit(): void {
+    continue(): void {
         if (this.validate()) {
             Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
                 globalThis.page.nextPage("/nextpage");
@@ -23,10 +24,12 @@ export class SelfAsserted implements IInteraction {
         }
     }
 
+    goback(): void {}
+
     validate(): boolean {
         let results: Array<IValidationResult> = [];
         for (let control of this.controls) {
-            let result = control.validateControl();
+            let result = control.validateInput();
             results.push(result);
         }
         
@@ -57,10 +60,10 @@ export class SelfAsserted implements IInteraction {
         element.setAttribute("id", "selfasserted");
 
         // Hook up controls
-        for (let sa_field of this.pageData.ATTRIBUTE_FIELDS) {
-            switch(sa_field.CONTROL_TYPE){
+        for (let sa_field of this.pageData.attributeFields) {
+            switch(sa_field.controlType){
                 case ControlTypes.Text:
-                    let control = new TextInputControl(sa_field);
+                    let control = new TextInput(sa_field);
                     element.appendChild(control);
                     this.controls.push(control);
                 case ControlTypes.Password:
@@ -70,9 +73,8 @@ export class SelfAsserted implements IInteraction {
         }
 
         // Append continue and back button
-        if (this.pageData.SETTINGS.showContinueButton) {
-            let btn = document.createElement("button");
-            btn.onclick = this.submit;
+        if (this.pageData.settings.showContinueButton) {
+            let btn = new Button(this);
             element.appendChild(btn);
         }
 

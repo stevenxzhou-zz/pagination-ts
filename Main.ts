@@ -6,7 +6,7 @@ export class Main {
     initialize(): void {
         var page = new Page();
         globalThis.page = page;
-        page.nextPage('/nextpage');
+        page.nextPage();
     }
 }
 

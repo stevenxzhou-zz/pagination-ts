@@ -6,7 +6,7 @@ export class SignIn implements IInteraction {
     pageData: IPageData
     sectionData: any
 
-    submit(): void { 
+    continue(): void { 
         if (this.validate()) {
             Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
                 globalThis.page.nextPage("/nextpage");
@@ -14,8 +14,10 @@ export class SignIn implements IInteraction {
         }
     }
 
+    goback(): void {}
+
     redirectToSignup(): void {
-        globalThis.page.nextPage("/signup");
+        globalThis.page.nextPage("unified?local=signup");
     }
 
     validate(): boolean {

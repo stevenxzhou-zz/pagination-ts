@@ -1,12 +1,12 @@
 import { ISettings } from "./ISettings";
-import { IAttributeFields } from "./IAttributeFields";
+import { IAttributeField } from "./IAttributeField";
 import { IResponseData } from "./IResponseData";
 
 export interface IPageData extends IResponseData {
-    TYPE: number,
-    ATTRIBUTE_FIELDS: Array<IAttributeFields>,
-    SETTINGS: ISettings,
-    CONTENT: any,
-    ELEMENT: string,
-    ELEMENTS: Array<string>
+    type: number,
+    attributeFields: Array<IAttributeField>,
+    settings: ISettings,
+    content: any,
+    element: string,
+    elements: Array<string>
 }

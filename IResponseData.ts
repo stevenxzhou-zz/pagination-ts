@@ -1,3 +1,3 @@
 export interface IResponseData {
-    TYPE: number
+    type: number
 }

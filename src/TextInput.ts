@@ -5,30 +5,27 @@ var handlebar = require("handlebars");
 
 export class TextInput implements IInput {
     errorMessage: string
-    claimId: string
-    value: any
-    defaultValue: string
-    isEnabled: boolean
+    attributeField: IAttributeField
     element: HTMLElement
+    claimId: string
+    value: string
     template: string
-    placeholder: string
 
     constructor(attributeField: IAttributeField) {
-        this.claimId = attributeField.claimId
-        this.defaultValue = attributeField.defaultValue
-        this.isEnabled = attributeField.isEnabled
-        this.template = attributeField.template
-        this.placeholder = attributeField.placeHolder
+        this.attributeField = attributeField;
         this.generateInput();
     }
 
     generateInput(): void {
-        // Can we use handlebar or annotation for setting the template?
-        var template = handlebar.compile(this.template);
-        var htmlString = template({id: this.claimId, placeholder: this.placeholder});
+        var template = handlebar.compile(this.attributeField.template);
+        var htmlString = template({
+            id: this.attributeField.claimId, 
+            placeholder: this.attributeField.placeHolder,
+            displayName: this.attributeField.displayName
+        });
         var htmlElement = document.createElement("div");
         htmlElement.innerHTML = htmlString
-        var input:HTMLElement = htmlElement.querySelector("#" + this.claimId);
+        var input:HTMLElement = htmlElement.querySelector("#" + this.attributeField.claimId);
         input.setAttribute("onclick", "alert(123)");
         this.element = htmlElement;
     }

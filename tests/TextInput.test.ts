@@ -16,10 +16,11 @@ describe('Test Text Input Control', function() {
             placeHolder: "test",
             isEnabled: false,
             claimId: "username",
-            template: "<input id='{{id}}' placeholder='{{placeholder}}'></input>"
+            displayName: "User Name",
+            template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>"
         }
 
         let textInput = new TextInput(attributeField).element;
-        expect(textInput.outerHTML).equal("<div><input id=\"username\" placeholder=\"test\" onclick=\"alert(123)\"></div>");
+        expect(textInput.outerHTML).equal("<div><label id=\"username_label\">User Name</label><div id=\"username_error\"></div><input id=\"username\" placeholder=\"test\" onclick=\"alert(123)\"></div>");
     }); 
 });

@@ -6,4 +6,5 @@ export interface IAttributeField {
     isEnabled: boolean
     claimId: string
     template: string
+    displayName: string
 }

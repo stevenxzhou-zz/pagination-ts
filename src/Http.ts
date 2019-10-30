@@ -1,8 +1,7 @@
 import { IPageData } from "./IPageData"
 
 export class Http {
-    static getNextPageData(url: string): IPageData {
-        this.fetchResourceAsync(url).then(function(){        })
+    static getNextPageData(): IPageData {
         return {
             type: 1,
             attributeFields: [{
@@ -10,15 +9,18 @@ export class Http {
                 defaultValue: "deaulttext",
                 predicates: {},
                 placeHolder: "placeholderstring",
-                isEnabled: true
+                isEnabled: true,
+                claimId: "test",
+                template: "",
+                displayName: ""
             }],
             settings: {
-                remoteResource: "https://cpim.azureedge.com/static/tenant/default/selfasserted.cshtml",
+                remoteResource: "http://localhost:3000/static/tenant/default/selfasserted.cshtml",
                 showContinueButton: true
             },
             content: {},
-            element: "https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js",
-            elements: ["https://cpim.azureedge.com/static/js/1.2.0/selfasserted.min.js"]
+            element: "http://localhost:3000/static/js/1.2.0/selfasserted.min.js",
+            elements: ["https://localhost:3000/static/js/1.2.0/selfasserted.min.js"]
         }
     }
 

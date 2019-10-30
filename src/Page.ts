@@ -19,7 +19,7 @@ export class Page{
         this.contentReady = false;
         this.pageReady = false;
 
-        var responseData : IResponseData = Http.getNextPageData(url);
+        var responseData : IResponseData = Http.getNextPageData();
 
         // redirect page.
         if (responseData.type == ResponseTypes.Redirect) {

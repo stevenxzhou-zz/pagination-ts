@@ -8,17 +8,19 @@ export class Http {
                 controlType: 1,
                 defaultValue: "deaulttext",
                 predicates: {},
-                placeHolder: "placeholderstring",
+                placeHolder: "UserName",
                 isEnabled: true,
-                claimId: "test",
-                template: "",
-                displayName: ""
+                claimId: "username",
+                template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
+                displayName: "User Name"
             }],
             settings: {
-                remoteResource: "http://localhost:3000/static/tenant/default/selfasserted.cshtml",
+                remoteResource: "http://localhost:3000/static/templates/default/selfasserted.html",
                 showContinueButton: true
             },
-            content: {},
+            content: {
+                "button": "Button"
+            },
             element: "http://localhost:3000/static/js/1.2.0/selfasserted.min.js",
             elements: ["https://localhost:3000/static/js/1.2.0/selfasserted.min.js"]
         }
@@ -46,12 +48,15 @@ export class Http {
 
     // Async method to fetch a resource
     static fetchResourceAsync(url: string): Promise<string> {
+        console.log(url);
         return new Promise(function(resolve, reject) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url);
             xhr.setRequestHeader('Content-Type', 'application/html');
+            xhr.send();
             xhr.onload = function() {
                 if (xhr.status === 200) {
+                    console.log("template loaded");
                     resolve(xhr.responseText)
                 }
             };

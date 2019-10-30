@@ -18,6 +18,7 @@ export class SelfAsserted implements IInteraction {
         this.pageData = pageData;
         // The controls can be rendered based on the order number
         this.template = "<div>{{#controls}}{{control}}{{/controls}}</div>";
+        this.controls = []
     }
 
     continue(): void {
@@ -58,7 +59,7 @@ export class SelfAsserted implements IInteraction {
     hideError(): void { console.log("show error"); }
     
     // genenerate the section html element without handlebars help.
-    generateServiceContent(): HTMLElement {
+    generateIEFComponent(): HTMLElement {
 
         var element = document.createElement("div");
         element.setAttribute("id", "selfasserted");
@@ -78,8 +79,9 @@ export class SelfAsserted implements IInteraction {
 
         // Append continue and back button
         if (this.pageData.settings.showContinueButton) {
-            let btn = new Button(this);
-            element.appendChild(btn);
+            console.log(this.pageData);
+            let btn = new Button(this, this.pageData);
+            element.appendChild(btn.element);
         }
 
         return element;

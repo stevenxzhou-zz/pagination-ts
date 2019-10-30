@@ -6,6 +6,7 @@ export interface IInput {
     value: any
     template: string
 
+    generateInput(): void
     enableInput(): void
     disableInput(): void
     showInputError(): void

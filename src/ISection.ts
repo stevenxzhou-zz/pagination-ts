@@ -1,3 +1,3 @@
 export interface ISection {
-    generateServiceContent(): HTMLElement
+    generateIEFComponent(): HTMLElement
 }

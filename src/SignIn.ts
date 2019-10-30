@@ -28,7 +28,7 @@ export class SignIn implements IInteraction {
     
     hideError(): void { console.log("show error"); }
     
-    generateServiceContent(): HTMLElement {
+    generateIEFComponent(): HTMLElement {
         var el = document.createElement("div");
         return el;
     }

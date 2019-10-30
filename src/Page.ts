@@ -18,8 +18,9 @@ export class Page{
     nextPage(url?: string): void {
         this.contentReady = false;
         this.pageReady = false;
-
         var responseData : IResponseData = Http.getNextPageData();
+        
+        var self = this;
 
         // redirect page.
         if (responseData.type == ResponseTypes.Redirect) {
@@ -27,14 +28,14 @@ export class Page{
             Http.redirectPage(redirectData.redirectUri);
         } else {
             var pageData : IPageData = <IPageData>responseData;
-
+            
             var scriptPromise = this.appendScriptUrlToHead(pageData.element);
             var templatePromise = this.getRemoteResource(pageData.settings.remoteResource);
     
             Promise.all([scriptPromise, templatePromise]).then(function(values) {
-                this.contentReady = true;
+                self.contentReady = true;
                 var template = values[1];
-                this.buildPage(pageData, template);
+                self.buildPage(pageData, template);
             })
         }
     }
@@ -49,7 +50,7 @@ export class Page{
 
         // Append section in to api.
         var section = this.getSection(pageData);
-        var sectionHtml = section.generateServiceContent();
+        var sectionHtml = section.generateIEFComponent();
         var api = document.getElementById("api");
         if (api.firstChild != null) {
             api.firstChild.replaceWith(sectionHtml);
@@ -100,6 +101,7 @@ export class Page{
         return new Promise(function(resolve, reject) {
             script.onload = function() {
                 resolve();
+                console.log("script loaded");
             }
         })
     }

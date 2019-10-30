@@ -5188,23 +5188,31 @@ if ( true && (void 0)) {
 /*!***********************!*\
   !*** ./src/Button.ts ***!
   \***********************/
-/*! exports provided: Button */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Button", function() { return Button; });
-class Button extends Node {
-    constructor(interaction) {
-        super();
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Button = /** @class */ (function () {
+    function Button(interaction, pageData) {
         this.interaction = interaction;
+        this.pageData = pageData;
+        this.element = this.generateButton();
     }
-    nextPage() {
+    Button.prototype.generateButton = function () {
+        var btnel = document.createElement("button");
+        btnel.textContent = this.pageData.content.button;
+        return btnel;
+    };
+    Button.prototype.nextPage = function () {
         this.interaction.continue();
-    }
-    enableButton() { }
-    disableButton() { }
-}
+    };
+    Button.prototype.enableButton = function () { };
+    Button.prototype.disableButton = function () { };
+    return Button;
+}());
+exports.Button = Button;
 
 
 /***/ }),
@@ -5213,12 +5221,12 @@ class Button extends Node {
 /*!*****************************!*\
   !*** ./src/ControlTypes.ts ***!
   \*****************************/
-/*! exports provided: ControlTypes */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ControlTypes", function() { return ControlTypes; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var ControlTypes;
 (function (ControlTypes) {
     ControlTypes[ControlTypes["Text"] = 1] = "Text";
@@ -5226,7 +5234,7 @@ var ControlTypes;
     ControlTypes[ControlTypes["Dropdown"] = 3] = "Dropdown";
     ControlTypes[ControlTypes["RadioButtonSignleSelect"] = 4] = "RadioButtonSignleSelect";
     ControlTypes[ControlTypes["CheckButtonMultiSelect"] = 5] = "CheckButtonMultiSelect";
-})(ControlTypes || (ControlTypes = {}));
+})(ControlTypes = exports.ControlTypes || (exports.ControlTypes = {}));
 
 
 /***/ }),
@@ -5235,37 +5243,41 @@ var ControlTypes;
 /*!*********************!*\
   !*** ./src/Http.ts ***!
   \*********************/
-/*! exports provided: Http */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Http", function() { return Http; });
-class Http {
-    static getNextPageData() {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Http = /** @class */ (function () {
+    function Http() {
+    }
+    Http.getNextPageData = function () {
         return {
             type: 1,
             attributeFields: [{
                     controlType: 1,
                     defaultValue: "deaulttext",
                     predicates: {},
-                    placeHolder: "placeholderstring",
+                    placeHolder: "UserName",
                     isEnabled: true,
-                    claimId: "test",
-                    template: "",
-                    displayName: ""
+                    claimId: "username",
+                    template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
+                    displayName: "User Name"
                 }],
             settings: {
-                remoteResource: "http://localhost:3000/static/tenant/default/selfasserted.cshtml",
+                remoteResource: "http://localhost:3000/static/templates/default/selfasserted.html",
                 showContinueButton: true
             },
-            content: {},
+            content: {
+                "button": "Button"
+            },
             element: "http://localhost:3000/static/js/1.2.0/selfasserted.min.js",
             elements: ["https://localhost:3000/static/js/1.2.0/selfasserted.min.js"]
         };
-    }
+    };
     // Async method to send data.
-    static sendDataAsync(data, url) {
+    Http.sendDataAsync = function (data, url) {
         return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', url);
@@ -5277,25 +5289,30 @@ class Http {
                 }
             };
         });
-    }
+    };
     // Async method to send data.
-    static redirectPage(url) {
+    Http.redirectPage = function (url) {
         window.location.replace(url);
-    }
+    };
     // Async method to fetch a resource
-    static fetchResourceAsync(url) {
+    Http.fetchResourceAsync = function (url) {
+        console.log(url);
         return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url);
             xhr.setRequestHeader('Content-Type', 'application/html');
+            xhr.send();
             xhr.onload = function () {
                 if (xhr.status === 200) {
+                    console.log("template loaded");
                     resolve(xhr.responseText);
                 }
             };
         });
-    }
-}
+    };
+    return Http;
+}());
+exports.Http = Http;
 
 
 /***/ }),
@@ -5304,22 +5321,25 @@ class Http {
 /*!*********************!*\
   !*** ./src/Main.ts ***!
   \*********************/
-/*! exports provided: Main */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Main", function() { return Main; });
-/* harmony import */ var _Page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Page */ "./src/Page.ts");
 
-class Main {
+Object.defineProperty(exports, "__esModule", { value: true });
+var Page_1 = __webpack_require__(/*! ./Page */ "./src/Page.ts");
+var Main = /** @class */ (function () {
+    function Main() {
+    }
     // This method only executes when browser initially loads the page.
-    initialize() {
-        var page = new _Page__WEBPACK_IMPORTED_MODULE_0__["Page"]();
+    Main.prototype.initialize = function () {
+        var page = new Page_1.Page();
         globalThis.page = page;
         page.nextPage();
-    }
-}
+    };
+    return Main;
+}());
+exports.Main = Main;
 var main = new Main();
 main.initialize();
 
@@ -5330,49 +5350,47 @@ main.initialize();
 /*!*********************!*\
   !*** ./src/Page.ts ***!
   \*********************/
-/*! exports provided: Page */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Page", function() { return Page; });
-/* harmony import */ var _Http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Http */ "./src/Http.ts");
-/* harmony import */ var _SelfAsserted__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SelfAsserted */ "./src/SelfAsserted.ts");
-/* harmony import */ var _ResponseTypes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ResponseTypes */ "./src/ResponseTypes.ts");
 
-
-
-class Page {
-    constructor() {
+Object.defineProperty(exports, "__esModule", { value: true });
+var Http_1 = __webpack_require__(/*! ./Http */ "./src/Http.ts");
+var SelfAsserted_1 = __webpack_require__(/*! ./SelfAsserted */ "./src/SelfAsserted.ts");
+var ResponseTypes_1 = __webpack_require__(/*! ./ResponseTypes */ "./src/ResponseTypes.ts");
+var Page = /** @class */ (function () {
+    function Page() {
     }
-    nextPage(url) {
+    Page.prototype.nextPage = function (url) {
         this.contentReady = false;
         this.pageReady = false;
-        var responseData = _Http__WEBPACK_IMPORTED_MODULE_0__["Http"].getNextPageData();
+        var responseData = Http_1.Http.getNextPageData();
+        var self = this;
         // redirect page.
-        if (responseData.type == _ResponseTypes__WEBPACK_IMPORTED_MODULE_2__["ResponseTypes"].Redirect) {
+        if (responseData.type == ResponseTypes_1.ResponseTypes.Redirect) {
             var redirectData = responseData;
-            _Http__WEBPACK_IMPORTED_MODULE_0__["Http"].redirectPage(redirectData.redirectUri);
+            Http_1.Http.redirectPage(redirectData.redirectUri);
         }
         else {
             var pageData = responseData;
             var scriptPromise = this.appendScriptUrlToHead(pageData.element);
             var templatePromise = this.getRemoteResource(pageData.settings.remoteResource);
             Promise.all([scriptPromise, templatePromise]).then(function (values) {
-                this.contentReady = true;
+                self.contentReady = true;
                 var template = values[1];
-                this.buildPage(pageData, template);
+                self.buildPage(pageData, template);
             });
         }
-    }
-    buildPage(pageData, template) {
+    };
+    Page.prototype.buildPage = function (pageData, template) {
         // Display waiting screen
         this.showWaitScreen();
         // Merge template with default
         this.process(pageData, template);
         // Append section in to api.
         var section = this.getSection(pageData);
-        var sectionHtml = section.generateServiceContent();
+        var sectionHtml = section.generateIEFComponent();
         var api = document.getElementById("api");
         if (api.firstChild != null) {
             api.firstChild.replaceWith(sectionHtml);
@@ -5383,31 +5401,31 @@ class Page {
         this.pageReady = true;
         // Hide wait screen
         this.hideWaitScreen();
-    }
-    getSection(pageData) {
+    };
+    Page.prototype.getSection = function (pageData) {
         switch (pageData.type) {
-            case _ResponseTypes__WEBPACK_IMPORTED_MODULE_2__["ResponseTypes"].SelfAsserted:
-                var selfAsserted = new _SelfAsserted__WEBPACK_IMPORTED_MODULE_1__["SelfAsserted"](pageData);
+            case ResponseTypes_1.ResponseTypes.SelfAsserted:
+                var selfAsserted = new SelfAsserted_1.SelfAsserted(pageData);
                 return selfAsserted;
             default:
                 return null;
         }
-    }
-    process(pageData, template) {
+    };
+    Page.prototype.process = function (pageData, template) {
         // Sanitize
         // preload customer js and css
         // Merge with default template
-    }
-    showWaitScreen() {
+    };
+    Page.prototype.showWaitScreen = function () {
         console.log("Display wait screen.");
-    }
-    hideWaitScreen() {
+    };
+    Page.prototype.hideWaitScreen = function () {
         console.log("Hide wait screen.");
-    }
-    getRemoteResource(url) {
-        return _Http__WEBPACK_IMPORTED_MODULE_0__["Http"].fetchResourceAsync(url);
-    }
-    appendScriptUrlToHead(url) {
+    };
+    Page.prototype.getRemoteResource = function (url) {
+        return Http_1.Http.fetchResourceAsync(url);
+    };
+    Page.prototype.appendScriptUrlToHead = function (url) {
         var script = document.createElement("script");
         script.setAttribute("src", url);
         script.setAttribute("id", "selfasserted");
@@ -5415,10 +5433,13 @@ class Page {
         return new Promise(function (resolve, reject) {
             script.onload = function () {
                 resolve();
+                console.log("script loaded");
             };
         });
-    }
-}
+    };
+    return Page;
+}());
+exports.Page = Page;
 
 
 /***/ }),
@@ -5427,19 +5448,19 @@ class Page {
 /*!******************************!*\
   !*** ./src/ResponseTypes.ts ***!
   \******************************/
-/*! exports provided: ResponseTypes */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponseTypes", function() { return ResponseTypes; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var ResponseTypes;
 (function (ResponseTypes) {
     ResponseTypes[ResponseTypes["Redirect"] = 0] = "Redirect";
     ResponseTypes[ResponseTypes["SelfAsserted"] = 1] = "SelfAsserted";
     ResponseTypes[ResponseTypes["SignIn"] = 2] = "SignIn";
     ResponseTypes[ResponseTypes["Multifactor"] = 3] = "Multifactor";
-})(ResponseTypes || (ResponseTypes = {}));
+})(ResponseTypes = exports.ResponseTypes || (exports.ResponseTypes = {}));
 
 
 /***/ }),
@@ -5448,79 +5469,82 @@ var ResponseTypes;
 /*!*****************************!*\
   !*** ./src/SelfAsserted.ts ***!
   \*****************************/
-/*! exports provided: SelfAsserted */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelfAsserted", function() { return SelfAsserted; });
-/* harmony import */ var _TextInput__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TextInput */ "./src/TextInput.ts");
-/* harmony import */ var _ControlTypes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ControlTypes */ "./src/ControlTypes.ts");
-/* harmony import */ var _Http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Http */ "./src/Http.ts");
-/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Button */ "./src/Button.ts");
 
-
-
-
-class SelfAsserted {
-    constructor(pageData) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var TextInput_1 = __webpack_require__(/*! ./TextInput */ "./src/TextInput.ts");
+var ControlTypes_1 = __webpack_require__(/*! ./ControlTypes */ "./src/ControlTypes.ts");
+var Http_1 = __webpack_require__(/*! ./Http */ "./src/Http.ts");
+var Button_1 = __webpack_require__(/*! ./Button */ "./src/Button.ts");
+var SelfAsserted = /** @class */ (function () {
+    function SelfAsserted(pageData) {
         this.pageData = pageData;
         // The controls can be rendered based on the order number
         this.template = "<div>{{#controls}}{{control}}{{/controls}}</div>";
+        this.controls = [];
     }
-    continue() {
+    SelfAsserted.prototype.continue = function () {
         if (this.validate()) {
-            _Http__WEBPACK_IMPORTED_MODULE_2__["Http"].sendDataAsync("https://api.com/submit", this.sectionData).then(function () {
+            Http_1.Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function () {
                 //globalThis.page.nextPage("/nextpage");
             });
         }
-    }
-    goback() { }
-    validate() {
-        let results = [];
-        for (let control of this.controls) {
-            let result = control.validateInput();
+    };
+    SelfAsserted.prototype.goback = function () { };
+    SelfAsserted.prototype.validate = function () {
+        var results = [];
+        for (var _i = 0, _a = this.controls; _i < _a.length; _i++) {
+            var control = _a[_i];
+            var result = control.validateInput();
             results.push(result);
         }
-        if (results.find(x => x.result === false)) {
+        if (results.find(function (x) { return x.result === false; })) {
             this.showError(results);
             return false;
         }
         this.hideError();
         return true;
-    }
-    showError(results) {
+    };
+    SelfAsserted.prototype.showError = function (results) {
         // We'll append these error messages top of the form.
         // Using element id we would allow user to navigate through the invalid controls.
-        for (let result of results) {
+        for (var _i = 0, results_1 = results; _i < results_1.length; _i++) {
+            var result = results_1[_i];
             console.log(result.errorMessage);
         }
-    }
-    hideError() { console.log("show error"); }
+    };
+    SelfAsserted.prototype.hideError = function () { console.log("show error"); };
     // genenerate the section html element without handlebars help.
-    generateServiceContent() {
+    SelfAsserted.prototype.generateIEFComponent = function () {
         var element = document.createElement("div");
         element.setAttribute("id", "selfasserted");
         // Hook up controls
-        for (let sa_field of this.pageData.attributeFields) {
+        for (var _i = 0, _a = this.pageData.attributeFields; _i < _a.length; _i++) {
+            var sa_field = _a[_i];
             switch (sa_field.controlType) {
-                case _ControlTypes__WEBPACK_IMPORTED_MODULE_1__["ControlTypes"].Text:
-                    let control = new _TextInput__WEBPACK_IMPORTED_MODULE_0__["TextInput"](sa_field);
+                case ControlTypes_1.ControlTypes.Text:
+                    var control = new TextInput_1.TextInput(sa_field);
                     element.appendChild(control.element);
                     this.controls.push(control);
-                case _ControlTypes__WEBPACK_IMPORTED_MODULE_1__["ControlTypes"].Password:
-                case _ControlTypes__WEBPACK_IMPORTED_MODULE_1__["ControlTypes"].CheckButtonMultiSelect:
-                case _ControlTypes__WEBPACK_IMPORTED_MODULE_1__["ControlTypes"].RadioButtonSignleSelect:
+                case ControlTypes_1.ControlTypes.Password:
+                case ControlTypes_1.ControlTypes.CheckButtonMultiSelect:
+                case ControlTypes_1.ControlTypes.RadioButtonSignleSelect:
             }
         }
         // Append continue and back button
         if (this.pageData.settings.showContinueButton) {
-            let btn = new _Button__WEBPACK_IMPORTED_MODULE_3__["Button"](this);
-            element.appendChild(btn);
+            console.log(this.pageData);
+            var btn = new Button_1.Button(this, this.pageData);
+            element.appendChild(btn.element);
         }
         return element;
-    }
-}
+    };
+    return SelfAsserted;
+}());
+exports.SelfAsserted = SelfAsserted;
 
 
 /***/ }),
@@ -5529,19 +5553,19 @@ class SelfAsserted {
 /*!**************************!*\
   !*** ./src/TextInput.ts ***!
   \**************************/
-/*! exports provided: TextInput */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TextInput", function() { return TextInput; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var handlebar = __webpack_require__(/*! handlebars */ "./node_modules/handlebars/lib/index.js");
-class TextInput {
-    constructor(attributeField) {
+var TextInput = /** @class */ (function () {
+    function TextInput(attributeField) {
         this.attributeField = attributeField;
         this.generateInput();
     }
-    generateInput() {
+    TextInput.prototype.generateInput = function () {
         var template = handlebar.compile(this.attributeField.template);
         var htmlString = template({
             id: this.attributeField.claimId,
@@ -5553,25 +5577,27 @@ class TextInput {
         var input = htmlElement.querySelector("#" + this.attributeField.claimId);
         input.setAttribute("onclick", "alert(123)");
         this.element = htmlElement;
-    }
-    enableInput() { }
-    disableInput() { }
-    showInputError() { }
-    hideInputError() { }
-    validateInput() {
+    };
+    TextInput.prototype.enableInput = function () { };
+    TextInput.prototype.disableInput = function () { };
+    TextInput.prototype.showInputError = function () { };
+    TextInput.prototype.hideInputError = function () { };
+    TextInput.prototype.validateInput = function () {
         return {
             errorMessage: "This is an error",
             elementId: "id",
             result: true
         };
-    }
-    getInputValue() {
+    };
+    TextInput.prototype.getInputValue = function () {
         return this.value;
-    }
-    setInputValue(value) {
+    };
+    TextInput.prototype.setInputValue = function (value) {
         this.value = value;
-    }
-}
+    };
+    return TextInput;
+}());
+exports.TextInput = TextInput;
 
 
 /***/ }),

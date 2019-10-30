@@ -6,13 +6,14 @@ import { ResponseTypes } from "./ResponseTypes";
 import { IRedirectData } from "./IRedirectData";
 import { IResponseData } from "./IResponseData";
 
-export class Page {
+export class Page extends HTMLElement{
     sectionContent: string;
     contentReady: boolean;
     pageReady: boolean;
+    prototype: HTMLElement;
 
     constructor() {
-
+        super()
     }
 
     nextPage(url?: string): void {

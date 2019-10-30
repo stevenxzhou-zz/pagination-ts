@@ -4,6 +4,7 @@ export interface IInput {
     errorMessage: string
     claimId: string
     value: any
+    template: string
 
     enableInput(): void
     disableInput(): void

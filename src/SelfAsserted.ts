@@ -11,15 +11,19 @@ export class SelfAsserted implements IInteraction {
     pageData: IPageData
     controls: Array<IInput>
     sectionData: any
+    // For each control to render
+    template: string
 
     constructor(pageData: IPageData) {
         this.pageData = pageData;
+        // The controls can be rendered based on the order number
+        this.template = "<div>{{#controls}}{{control}}{{/controls}}</div>";
     }
 
     continue(): void {
         if (this.validate()) {
             Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
-                globalThis.page.nextPage("/nextpage");
+                //globalThis.page.nextPage("/nextpage");
             })
         }
     }
@@ -64,7 +68,7 @@ export class SelfAsserted implements IInteraction {
             switch(sa_field.controlType){
                 case ControlTypes.Text:
                     let control = new TextInput(sa_field);
-                    element.appendChild(control);
+                    element.appendChild(control.element);
                     this.controls.push(control);
                 case ControlTypes.Password:
                 case ControlTypes.CheckButtonMultiSelect:

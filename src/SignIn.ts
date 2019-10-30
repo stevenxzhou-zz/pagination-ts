@@ -9,7 +9,7 @@ export class SignIn implements IInteraction {
     continue(): void { 
         if (this.validate()) {
             Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
-                globalThis.page.nextPage("/nextpage");
+                //globalThis.page.nextPage("/nextpage");
             })
         }
     }
@@ -17,7 +17,7 @@ export class SignIn implements IInteraction {
     goback(): void {}
 
     redirectToSignup(): void {
-        globalThis.page.nextPage("unified?local=signup");
+        //globalThis.page.nextPage("unified?local=signup");
     }
 
     validate(): boolean {

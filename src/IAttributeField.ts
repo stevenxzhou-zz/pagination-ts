@@ -4,4 +4,6 @@ export interface IAttributeField {
     predicates: any
     placeHolder: string
     isEnabled: boolean
+    claimId: string
+    template: string
 }

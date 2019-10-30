@@ -8,18 +8,29 @@ export class Http {
                 controlType: 1,
                 defaultValue: "deaulttext",
                 predicates: {},
-                placeHolder: "UserName",
+                placeHolder: "Username",
                 isEnabled: true,
                 claimId: "username",
                 template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
-                displayName: "User Name"
+                displayName: "Username"
+            },{
+                controlType: 1,
+                defaultValue: "deaulttext",
+                predicates: {},
+                placeHolder: "Password",
+                isEnabled: true,
+                claimId: "password",
+                template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
+                displayName: "Password"
             }],
             settings: {
                 remoteResource: "http://localhost:3000/static/templates/default/selfasserted.html",
                 showContinueButton: true
             },
             content: {
-                "button": "Button"
+                "button": "Button",
+                "signIn": "Sign in",
+                "signUp": "Sign up"
             },
             element: "http://localhost:3000/static/js/1.2.0/selfasserted.min.js",
             elements: ["https://localhost:3000/static/js/1.2.0/selfasserted.min.js"]

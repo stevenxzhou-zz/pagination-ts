@@ -22,7 +22,11 @@ const config = {
   },
   resolve: {
     // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    alias: {
+    // Handle warnings require.extensions is not supported by webpack. Use a loader instead
+      'handlebars':'handlebars/dist/handlebars.js'
+    }
   },
   module: {
     rules: [

@@ -6,17 +6,17 @@ export class Button implements IButton {
     buttonId: string
     interaction: IInteraction
     element: HTMLElement
-    pageData: IPageData
+    textContent: string
 
-    constructor(interaction: IInteraction, pageData: IPageData) {
+    constructor(interaction: IInteraction, textContent: string) {
         this.interaction = interaction;
-        this.pageData = pageData;
+        this.textContent = textContent;
         this.element = this.generateButton();
     }
     
     generateButton(): HTMLElement {
         let btnel = document.createElement("button");
-        btnel.textContent = this.pageData.content.button;
+        btnel.textContent = this.textContent;
         return btnel;
     }
 

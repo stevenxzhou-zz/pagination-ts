@@ -26,7 +26,7 @@ export class TextInput implements IInput {
         var htmlElement = document.createElement("div");
         htmlElement.innerHTML = htmlString
         var input:HTMLElement = htmlElement.querySelector("#" + this.attributeField.claimId);
-        input.setAttribute("onclick", "alert(123)");
+        input.setAttribute("onclick", "alert('" + this.attributeField.claimId + "')");
         this.element = htmlElement;
     }
 

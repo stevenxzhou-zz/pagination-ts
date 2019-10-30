@@ -21,6 +21,6 @@ describe('Test Text Input Control', function() {
         }
 
         let textInput = new TextInput(attributeField).element;
-        expect(textInput.outerHTML).equal("<div><label id=\"username_label\">User Name</label><div id=\"username_error\"></div><input id=\"username\" placeholder=\"test\" onclick=\"alert(123)\"></div>");
+        expect(textInput.outerHTML).equal("<div><label id=\"username_label\">User Name</label><div id=\"username_error\"></div><input id=\"username\" placeholder=\"test\" onclick=\"alert('username')\"></div>");
     }); 
 });

@@ -79,7 +79,6 @@ export class SelfAsserted implements IInteraction {
 
         // Append continue and back button
         if (this.pageData.settings.showContinueButton) {
-            console.log(this.pageData);
             let btn = new Button(this, this.pageData.content.signUp);
             element.appendChild(btn.element);
         }

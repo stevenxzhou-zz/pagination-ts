@@ -12,6 +12,7 @@ export class Page{
     contentReady: boolean;
     pageReady: boolean;
     prototype: HTMLElement;
+    currentPageType: number;
 
     constructor() {
     }
@@ -20,16 +21,17 @@ export class Page{
         this.contentReady = false;
         this.pageReady = false;
         var responseData : IResponseData = Http.getNextPageData(pageNumber);
-        
         var self = this;
 
+        // check the current page type, remove the javascript and css from previous page load.
+        
         // redirect page.
         if (responseData.type == ResponseTypes.Redirect) {
             var redirectData : IRedirectData = <IRedirectData>responseData;
             Http.redirectPage(redirectData.redirectUri);
         } else {
             var pageData : IPageData = <IPageData>responseData;
-            
+            this.currentPageType  = pageData.type;
             var scriptPromise = this.appendScriptUrlToHead(pageData.element);
             var templatePromise = this.getRemoteResource(pageData.settings.remoteResource);
     

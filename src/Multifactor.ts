@@ -7,7 +7,7 @@ import { ControlTypes } from "./ControlTypes";
 import { Http } from "./Http";
 import { Button } from "./Button";
 
-export class SelfAsserted implements IInteraction {
+export class Multifactor implements IInteraction {
     pageData: IPageData
     controls: Array<IInput>
     sectionData: any
@@ -23,17 +23,15 @@ export class SelfAsserted implements IInteraction {
 
     continue(): void {
         if (this.validate()) {
-            globalThis.page.nextPage(3);
-            // Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
-            //     globalThis.page.nextPage(2);
-            // })
+            Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
+                //globalThis.page.nextPage("/nextpage");
+            })
         }
     }
 
     goback(): void {}
 
     validate(): boolean {
-        console.log("validating...");
         let results: Array<IValidationResult> = [];
         for (let control of this.controls) {
             let result = control.validateInput();
@@ -58,7 +56,7 @@ export class SelfAsserted implements IInteraction {
         }
     }
     
-    hideError(): void { console.log("show error"); }
+    hideError(): void { console.log("hide error"); }
     
     // genenerate the section html element without handlebars help.
     generateIEFComponent(): HTMLElement {

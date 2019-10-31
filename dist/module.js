@@ -5043,6 +5043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(exports, "__esModule", { value: true });
 var Button = /** @class */ (function () {
     function Button(interaction, textContent) {
+        console.log(interaction);
         this.interaction = interaction;
         this.textContent = textContent;
         this.element = this.generateButton();
@@ -5050,6 +5051,7 @@ var Button = /** @class */ (function () {
     Button.prototype.generateButton = function () {
         var btnel = document.createElement("button");
         btnel.textContent = this.textContent;
+        btnel.onclick = this.nextPage.bind(this);
         return btnel;
     };
     Button.prototype.nextPage = function () {
@@ -5099,40 +5101,79 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Http = /** @class */ (function () {
     function Http() {
     }
-    Http.getNextPageData = function () {
-        return {
-            type: 1,
-            attributeFields: [{
-                    controlType: 1,
-                    defaultValue: "deaulttext",
-                    predicates: {},
-                    placeHolder: "Username",
-                    isEnabled: true,
-                    claimId: "username",
-                    template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
-                    displayName: "Username"
-                }, {
-                    controlType: 1,
-                    defaultValue: "deaulttext",
-                    predicates: {},
-                    placeHolder: "Password",
-                    isEnabled: true,
-                    claimId: "password",
-                    template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
-                    displayName: "Password"
-                }],
-            settings: {
-                remoteResource: "http://localhost:3000/static/templates/default/selfasserted.html",
-                showContinueButton: true
-            },
-            content: {
-                "button": "Button",
-                "signIn": "Sign in",
-                "signUp": "Sign up"
-            },
-            element: "http://localhost:3000/static/js/1.2.0/selfasserted.min.js",
-            elements: ["https://localhost:3000/static/js/1.2.0/selfasserted.min.js"]
-        };
+    Http.getNextPageData = function (pageNumber) {
+        if (pageNumber === 1) {
+            return {
+                type: 1,
+                attributeFields: [{
+                        controlType: 1,
+                        defaultValue: "deaulttext",
+                        predicates: {},
+                        placeHolder: "Username",
+                        isEnabled: true,
+                        claimId: "username",
+                        template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
+                        displayName: "Username"
+                    }, {
+                        controlType: 1,
+                        defaultValue: "deaulttext",
+                        predicates: {},
+                        placeHolder: "Password",
+                        isEnabled: true,
+                        claimId: "password",
+                        template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
+                        displayName: "Password"
+                    }],
+                settings: {
+                    remoteResource: "http://localhost:3000/static/templates/default/selfasserted.html",
+                    showContinueButton: true
+                },
+                content: {
+                    "button": "Button",
+                    "signIn": "Sign in",
+                    "signUp": "Sign up",
+                    "continue": "Continue"
+                },
+                element: "http://localhost:3000/static/js/1.2.0/selfasserted.min.js",
+                elements: ["https://localhost:3000/static/js/1.2.0/selfasserted.min.js"]
+            };
+        }
+        if (pageNumber === 3) {
+            return {
+                type: 3,
+                attributeFields: [{
+                        controlType: 1,
+                        defaultValue: "deaulttext",
+                        predicates: {},
+                        placeHolder: "Phone Number",
+                        isEnabled: true,
+                        claimId: "phonenumber",
+                        template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
+                        displayName: "Phone Number"
+                    }, {
+                        controlType: 1,
+                        defaultValue: "deaulttext",
+                        predicates: {},
+                        placeHolder: "Verification Code",
+                        isEnabled: true,
+                        claimId: "verficationcode",
+                        template: "<label id='{{id}}_label'>{{displayName}}</label><div id='{{id}}_error'></div></div><input id='{{id}}' placeholder='{{placeholder}}'></input>",
+                        displayName: "Verfication Code"
+                    }],
+                settings: {
+                    remoteResource: "http://localhost:3000/static/templates/default/selfasserted.html",
+                    showContinueButton: true
+                },
+                content: {
+                    "button": "Button",
+                    "signIn": "Sign in",
+                    "signUp": "Sign up",
+                    "continue": "Continue"
+                },
+                element: "http://localhost:3000/static/js/1.2.0/selfasserted.min.js",
+                elements: ["https://localhost:3000/static/js/1.2.0/selfasserted.min.js"]
+            };
+        }
     };
     // Async method to send data.
     Http.sendDataAsync = function (data, url) {
@@ -5193,13 +5234,96 @@ var Main = /** @class */ (function () {
     Main.prototype.initialize = function () {
         var page = new Page_1.Page();
         globalThis.page = page;
-        page.nextPage();
+        page.nextPage(1);
     };
     return Main;
 }());
 exports.Main = Main;
 var main = new Main();
 main.initialize();
+
+
+/***/ }),
+
+/***/ "./src/Multifactor.ts":
+/*!****************************!*\
+  !*** ./src/Multifactor.ts ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TextInput_1 = __webpack_require__(/*! ./TextInput */ "./src/TextInput.ts");
+var ControlTypes_1 = __webpack_require__(/*! ./ControlTypes */ "./src/ControlTypes.ts");
+var Http_1 = __webpack_require__(/*! ./Http */ "./src/Http.ts");
+var Button_1 = __webpack_require__(/*! ./Button */ "./src/Button.ts");
+var Multifactor = /** @class */ (function () {
+    function Multifactor(pageData) {
+        this.pageData = pageData;
+        // The controls can be rendered based on the order number
+        this.template = "<div>{{#controls}}{{control}}{{/controls}}</div>";
+        this.controls = [];
+    }
+    Multifactor.prototype.continue = function () {
+        if (this.validate()) {
+            Http_1.Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function () {
+                //globalThis.page.nextPage("/nextpage");
+            });
+        }
+    };
+    Multifactor.prototype.goback = function () { };
+    Multifactor.prototype.validate = function () {
+        var results = [];
+        for (var _i = 0, _a = this.controls; _i < _a.length; _i++) {
+            var control = _a[_i];
+            var result = control.validateInput();
+            results.push(result);
+        }
+        if (results.find(function (x) { return x.result === false; })) {
+            this.showError(results);
+            return false;
+        }
+        this.hideError();
+        return true;
+    };
+    Multifactor.prototype.showError = function (results) {
+        // We'll append these error messages top of the form.
+        // Using element id we would allow user to navigate through the invalid controls.
+        for (var _i = 0, results_1 = results; _i < results_1.length; _i++) {
+            var result = results_1[_i];
+            console.log(result.errorMessage);
+        }
+    };
+    Multifactor.prototype.hideError = function () { console.log("show error"); };
+    // genenerate the section html element without handlebars help.
+    Multifactor.prototype.generateIEFComponent = function () {
+        var element = document.createElement("div");
+        element.setAttribute("id", "selfasserted");
+        // Hook up controls
+        for (var _i = 0, _a = this.pageData.attributeFields; _i < _a.length; _i++) {
+            var sa_field = _a[_i];
+            switch (sa_field.controlType) {
+                case ControlTypes_1.ControlTypes.Text:
+                    var control = new TextInput_1.TextInput(sa_field);
+                    element.appendChild(control.element);
+                    this.controls.push(control);
+                case ControlTypes_1.ControlTypes.Password:
+                case ControlTypes_1.ControlTypes.CheckButtonMultiSelect:
+                case ControlTypes_1.ControlTypes.RadioButtonSignleSelect:
+            }
+        }
+        // Append continue and back button
+        if (this.pageData.settings.showContinueButton) {
+            var btn = new Button_1.Button(this, this.pageData.content.continue);
+            element.appendChild(btn.element);
+        }
+        return element;
+    };
+    return Multifactor;
+}());
+exports.Multifactor = Multifactor;
 
 
 /***/ }),
@@ -5217,13 +5341,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Http_1 = __webpack_require__(/*! ./Http */ "./src/Http.ts");
 var SelfAsserted_1 = __webpack_require__(/*! ./SelfAsserted */ "./src/SelfAsserted.ts");
 var ResponseTypes_1 = __webpack_require__(/*! ./ResponseTypes */ "./src/ResponseTypes.ts");
+var Multifactor_1 = __webpack_require__(/*! ./Multifactor */ "./src/Multifactor.ts");
 var Page = /** @class */ (function () {
     function Page() {
     }
-    Page.prototype.nextPage = function (url) {
+    Page.prototype.nextPage = function (pageNumber) {
         this.contentReady = false;
         this.pageReady = false;
-        var responseData = Http_1.Http.getNextPageData();
+        var responseData = Http_1.Http.getNextPageData(pageNumber);
         var self = this;
         // redirect page.
         if (responseData.type == ResponseTypes_1.ResponseTypes.Redirect) {
@@ -5265,6 +5390,9 @@ var Page = /** @class */ (function () {
             case ResponseTypes_1.ResponseTypes.SelfAsserted:
                 var selfAsserted = new SelfAsserted_1.SelfAsserted(pageData);
                 return selfAsserted;
+            case ResponseTypes_1.ResponseTypes.Multifactor:
+                var multifactor = new Multifactor_1.Multifactor(pageData);
+                return multifactor;
             default:
                 return null;
         }
@@ -5335,7 +5463,6 @@ var ResponseTypes;
 Object.defineProperty(exports, "__esModule", { value: true });
 var TextInput_1 = __webpack_require__(/*! ./TextInput */ "./src/TextInput.ts");
 var ControlTypes_1 = __webpack_require__(/*! ./ControlTypes */ "./src/ControlTypes.ts");
-var Http_1 = __webpack_require__(/*! ./Http */ "./src/Http.ts");
 var Button_1 = __webpack_require__(/*! ./Button */ "./src/Button.ts");
 var SelfAsserted = /** @class */ (function () {
     function SelfAsserted(pageData) {
@@ -5346,13 +5473,15 @@ var SelfAsserted = /** @class */ (function () {
     }
     SelfAsserted.prototype.continue = function () {
         if (this.validate()) {
-            Http_1.Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function () {
-                //globalThis.page.nextPage("/nextpage");
-            });
+            globalThis.page.nextPage(3);
+            // Http.sendDataAsync("https://api.com/submit", this.sectionData).then(function(){
+            //     globalThis.page.nextPage(2);
+            // })
         }
     };
     SelfAsserted.prototype.goback = function () { };
     SelfAsserted.prototype.validate = function () {
+        console.log("validating...");
         var results = [];
         for (var _i = 0, _a = this.controls; _i < _a.length; _i++) {
             var control = _a[_i];
@@ -5394,8 +5523,7 @@ var SelfAsserted = /** @class */ (function () {
         }
         // Append continue and back button
         if (this.pageData.settings.showContinueButton) {
-            console.log(this.pageData);
-            var btn = new Button_1.Button(this, this.pageData.content.signUp);
+            var btn = new Button_1.Button(this, this.pageData.content.continue);
             element.appendChild(btn.element);
         }
         return element;
@@ -5442,7 +5570,7 @@ var TextInput = /** @class */ (function () {
     TextInput.prototype.hideInputError = function () { };
     TextInput.prototype.validateInput = function () {
         return {
-            errorMessage: "This is an error",
+            errorMessage: "This is correct",
             elementId: "id",
             result: true
         };

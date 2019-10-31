@@ -5,6 +5,7 @@ import { IInteraction } from "./IInteraction"
 import { ResponseTypes } from "./ResponseTypes";
 import { IRedirectData } from "./IRedirectData";
 import { IResponseData } from "./IResponseData";
+import { Multifactor } from "./Multifactor";
 
 export class Page{
     sectionContent: string;
@@ -15,10 +16,10 @@ export class Page{
     constructor() {
     }
 
-    nextPage(url?: string): void {
+    nextPage(pageNumber: number): void {
         this.contentReady = false;
         this.pageReady = false;
-        var responseData : IResponseData = Http.getNextPageData();
+        var responseData : IResponseData = Http.getNextPageData(pageNumber);
         
         var self = this;
 
@@ -69,6 +70,9 @@ export class Page{
             case ResponseTypes.SelfAsserted:
                 var selfAsserted = new SelfAsserted(pageData);
                 return selfAsserted;
+            case ResponseTypes.Multifactor:
+                var multifactor = new Multifactor(pageData);
+                return multifactor
             default:
                 return null;
         }

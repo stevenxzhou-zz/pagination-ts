@@ -17,6 +17,7 @@ export class Button implements IButton {
     generateButton(): HTMLElement {
         let btnel = document.createElement("button");
         btnel.textContent = this.textContent;
+        btnel.onclick = this.nextPage.bind(this)
         return btnel;
     }
 

@@ -38,7 +38,7 @@ export class TextInput implements IInput {
     
     validateInput(): IValidationResult {
         return {
-            errorMessage: "This is an error",
+            errorMessage: "This is correct",
             elementId: "id",
             result: true
         };

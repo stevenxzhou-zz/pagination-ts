@@ -28,7 +28,7 @@ export class Page{
         // redirect page.
         if (responseData.type == ResponseTypes.Redirect) {
             var redirectData : IRedirectData = <IRedirectData>responseData;
-            Http.redirectPage(redirectData.redirectUri);
+            this.redirectPage(redirectData.redirectUri);
         } else {
             var pageData : IPageData = <IPageData>responseData;
             this.currentPageType  = pageData.type;
@@ -65,6 +65,11 @@ export class Page{
 
         // Hide wait screen
         this.hideWaitScreen();
+    }
+
+    // Async method to send data.
+    redirectPage(url: string): void {
+        window.location.replace(url);
     }
 
     getSection(pageData: IPageData): IInteraction {

@@ -1,6 +1,5 @@
 import { IAttributeFieldLegacy } from "./IAttributeFieldLegacy";
 import { ISettingsLegacy } from "./ISettingsLegacy";
-import { IPhoneNumberLegacy } from "./IPhoneNumberLegacy";
 import { IContent } from "./IContent";
 import { ISocialProvider } from "./ISocialProvider";
 import { IResponseData } from "./IResponseData";

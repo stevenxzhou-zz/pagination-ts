@@ -1,6 +1,5 @@
 import { IButton } from "./IButton";
 import { IInteraction } from "./IInteraction";
-import { IPageData } from "./IPageData";
 
 export class Button implements IButton {
     buttonId: string

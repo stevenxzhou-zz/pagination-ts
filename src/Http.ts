@@ -1,5 +1,3 @@
-import { IPageDataLegacy } from "./IPageDataLegacy";
-
 export class Http {
     static getNextPageData(pageNumber: number, isLegacy: boolean): any {
         

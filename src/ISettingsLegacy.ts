@@ -10,7 +10,14 @@ export interface ISettingsLegacy {
     isPageViewIdSentWithHeader: boolean,
     allowAutoFocusOnPasswordField: boolean,
     pageMode: number,
-    config: Map<string, string>,
+    config: {
+        showSignupLink: string,
+        operatingMode: string,
+        sendHintOnSignup: string,
+        forgotPasswordLinkLocation: string,
+        includePasswordRequirements: string,
+        announceVerCompleteMsg: string
+    },
     sanitizerPolicy: {
         allowedTags: Array<string>,
         allowedAttributes: {
@@ -28,8 +35,15 @@ export interface ISettingsLegacy {
         allowProtocolRelative: boolean,
         exclusiveFilter: Function 
     },
-    hosts: Map<string, string>,
-    locale: Map<string, string>
+    hosts: {                
+        tenant: string,
+        policy: string,
+        static: string
+    },
+    locale: {
+        lang: string,
+        country: string
+    },
     xhrSettings: {
         retryEnabled: boolean,
         retryMaxAttempts: number,

@@ -3,8 +3,10 @@ import { ISettingsLegacy } from "./ISettingsLegacy";
 import { IPhoneNumberLegacy } from "./IPhoneNumberLegacy";
 import { IContent } from "./IContent";
 import { ISocialProvider } from "./ISocialProvider";
+import { IResponseData } from "./IResponseData";
 
-export interface IPageDataLegacy {
+export interface IPageDataLegacy extends IResponseData {
+    type: number,
     CP: {
         list: Array<ISocialProvider>
     },

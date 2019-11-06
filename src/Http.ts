@@ -1,9 +1,12 @@
-import { IPageData } from "./IPageData"
 import { IPageDataLegacy } from "./IPageDataLegacy";
-import { stringify } from "querystring";
 
 export class Http {
-    static getNextPageData(pageNumber: number): IPageData {
+    static getNextPageData(pageNumber: number, isLegacy: boolean): any {
+        
+        if (isLegacy) {
+            return this.getNextPageDataLegacy(pageNumber);
+        }
+
         if (pageNumber === 1) {
             return {
                 type: 1,
@@ -79,7 +82,7 @@ export class Http {
         }
     }
 
-    static getNextPageDataLegacy(pageNumber: number): IPageDataLegacy {
+    static getNextPageDataLegacy(pageNumber: number): any {
 
         var CP = {
             "list": [{
@@ -223,6 +226,7 @@ export class Http {
 
         if (pageNumber === 1) {
             return {
+                type: 2,
                 UV_PHONE: {},
                 CP: CP,
                 SA_FIELDS: SA_FIELDS,
